@@ -294,9 +294,13 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 	if(Buf[0] == '1')
 	{
 		HAL_GPIO_WritePin(LD1_OUT_GPIO_Port, LD1_OUT_Pin, GPIO_PIN_RESET);
+		char data[] = "on\r\n";
+		CDC_Transmit_FS(data, sizeof(data));
 	}else if(Buf[0] == '0')
 	{
 		HAL_GPIO_WritePin(LD1_OUT_GPIO_Port, LD1_OUT_Pin, GPIO_PIN_SET);
+		char data[] = "off\r\n";
+		CDC_Transmit_FS(data, sizeof(data));
 	}
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
